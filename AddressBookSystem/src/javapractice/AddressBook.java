@@ -21,6 +21,11 @@ public class AddressBook {
         }
         return null;
     }
+
+    public boolean contactNameValidCheck(String name) {
+        return contactList.stream().anyMatch(contact -> contact.firstName.equals(name));
+    }
+
     public Set<Contact> getContactList() {
         return contactList;
     }

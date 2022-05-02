@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class AddressBookStorage {
     private static AddressBookStorage instance;
-    private HashMap<String,AddressBook> AddressBookLibrary = new HashMap<>();
+    private HashMap<String,AddressBook> addressBookLibrary = new HashMap<>();
 
     private AddressBookStorage() {
     }
@@ -16,22 +16,26 @@ public class AddressBookStorage {
     }
 
     public boolean addressBookNameValidCheck(String name) {
-        return !AddressBookLibrary.containsKey(name);
+        return !addressBookLibrary.containsKey(name);
+    }
+
+    public boolean contactNameDuplicateCheck(String name) {
+        return addressBookLibrary.values().stream().anyMatch(addressBook -> addressBook.contactNameValidCheck(name));
     }
 
     public void addAddressBook(String key, AddressBook addressBook) {
-        AddressBookLibrary.put(key, addressBook);
+        addressBookLibrary.put(key, addressBook);
     }
 
     public void removeAddressBook(String key) {
-        AddressBookLibrary.remove(key);
+        addressBookLibrary.remove(key);
     }
 
     public AddressBook getAddressBook(String key) {
-        return AddressBookLibrary.get(key);
+        return addressBookLibrary.get(key);
     }
 
     public HashMap<String, AddressBook> getAddressBookLibrary() {
-        return AddressBookLibrary;
+        return addressBookLibrary;
     }
 }
