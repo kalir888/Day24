@@ -1,6 +1,7 @@
 package javapractice;
 
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
     AddressBookStorage addressBookStorage = AddressBookStorage.getInstance();
@@ -13,7 +14,7 @@ public class Main {
                 create();
                 break;
             case 2:
-                System.out.println("Select \n1.print Contact\n2.print Contacts");
+                System.out.println("Select \n1.print Contact\n2.print Contacts\n3.print Count of Contacts");
                 int printChoice = get.nextInt();
                 switch(printChoice) {
                     case 1:
@@ -37,8 +38,34 @@ public class Main {
                             case 1:
                                 System.out.println("Enter the Address Book name");
                                 AddressBook addressBook = addressBookStorage.getAddressBook(get.next());
-                                UserInterface userInterface = UserInterface.getInstance();
-                                userInterface.print(addressBook.getContactList());
+                                System.out.println("""
+                                        Select:
+                                        1.Normal
+                                        2.Sorted by Name
+                                        3.Sorted by City
+                                        4.Sorted by State               
+                                        5.Sorted by Pin\s""");
+                                switch(get.nextInt()) {
+                                    case 1:
+                                        UserInterface userInterface = UserInterface.getInstance();
+                                        userInterface.print(addressBook.getContactList());
+                                        break;
+                                    case 2:
+                                        addressBook.printSortedContactsByName();
+                                        break;
+                                    case 3:
+                                        addressBook.printSortedContactsByCity();
+                                        break;
+                                    case 4:
+                                        addressBook.printSortedContactsByState();
+                                        break;
+                                    case 5:
+                                        addressBook.printSortedContactsByPin();
+                                        break;
+                                    default:
+                                        System.out.println("Invalid Option");
+                                        break;
+                                }
                                 break;
                             case 2:
                                 System.out.println("Enter the City name");
@@ -50,6 +77,34 @@ public class Main {
                                 break;
                             default:
                                 System.out.println("Invalid Print option");
+                                break;
+                        }
+                        break;
+                    case 3:
+                        System.out.println("""
+                                select an option:
+                                1.Contact Count of a City
+                                2.Contact Count of a State
+                                3.Contact Count of an AddressBook\s""");
+                        int countChoice = get.nextInt();
+                        switch(countChoice) {
+                            case 1:
+                                System.out.println("Enter the City");
+                                String city = get.next();
+                                System.out.println("Contact count of " + city + " is " + addressBookStorage.getContactCountOfCity(city));
+                                break;
+                            case 2:
+                                System.out.println("Enter the State");
+                                String state = get.next();
+                                System.out.println("Contact count of " + state + " is " + addressBookStorage.getContactCountOfState(state));
+                                break;
+                            case 3:
+                                System.out.println("Enter the AddressBook name");
+                                String name = get.next();
+                                System.out.println("Contact count of " + name + " is " + addressBookStorage.getAddressBook(name).getContactList().size());
+                                break;
+                            default:
+                                System.out.println("Invalid Count Option");
                                 break;
                         }
                         break;

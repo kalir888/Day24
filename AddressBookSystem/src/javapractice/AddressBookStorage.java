@@ -42,6 +42,16 @@ public class AddressBookStorage {
             System.out.println("There are no contacts belong to " + state);
     }
 
+    public long getContactCountOfCity(String city) {
+        List<List<Contact>> cityContacts = addressBookLibrary.values().stream().map(addressBook -> addressBook.getContactBelongToACity(city)).collect(Collectors.toList());
+        return cityContacts.size();
+    }
+
+    public long getContactCountOfState(String state) {
+        List<List<Contact>> stateContacts = addressBookLibrary.values().stream().map(addressBook -> addressBook.getContactBelongToAState(state)).collect(Collectors.toList());
+        return stateContacts.size();
+    }
+
     public void addAddressBook(String key, AddressBook addressBook) {
         addressBookLibrary.put(key, addressBook);
     }
