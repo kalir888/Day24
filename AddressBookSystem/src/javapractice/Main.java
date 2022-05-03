@@ -13,14 +13,50 @@ public class Main {
                 create();
                 break;
             case 2:
-                System.out.println("Enter the name of an Address Book");
-                String bookName = get.next();
-                if(!addressBookStorage.addressBookNameValidCheck(bookName)) {
-                    AddressBook addressBook = addressBookStorage.getAddressBook(bookName);
-                    UserInterface userInterface = UserInterface.getInstance();
-                    userInterface.print(addressBook.getContactList());
-                }else
-                    System.out.println("Address Book name not found");
+                System.out.println("Select \n1.print Contact\n2.print Contacts");
+                int printChoice = get.nextInt();
+                switch(printChoice) {
+                    case 1:
+                        System.out.println("Enter the name of an Address Book");
+                        String bookName = get.next();
+                        if (!addressBookStorage.addressBookNameValidCheck(bookName)) {
+                            AddressBook addressBook = addressBookStorage.getAddressBook(bookName);
+                            UserInterface userInterface = UserInterface.getInstance();
+                            userInterface.print(addressBook.getContactList());
+                        }else
+                            System.out.println("Address Book name not found");
+                        break;
+                    case 2:
+                        System.out.println("""
+                                Select
+                                1.Belong to an Address book
+                                2.Belong to a City
+                                3.Belong to a State\s""");
+                        printChoice = get.nextInt();
+                        switch(printChoice) {
+                            case 1:
+                                System.out.println("Enter the Address Book name");
+                                AddressBook addressBook = addressBookStorage.getAddressBook(get.next());
+                                UserInterface userInterface = UserInterface.getInstance();
+                                userInterface.print(addressBook.getContactList());
+                                break;
+                            case 2:
+                                System.out.println("Enter the City name");
+                                addressBookStorage.printContactBelongToCity(get.next());
+                                break;
+                            case 3:
+                                System.out.println("Enter the State name");
+                                addressBookStorage.printContactBelongToState(get.next());
+                                break;
+                            default:
+                                System.out.println("Invalid Print option");
+                                break;
+                        }
+                        break;
+                    default:
+                        System.out.println("Invalid Print option");
+                        break;
+                }
                 break;
             case 3:
                 System.out.println("Enter the name of an Address Book");
